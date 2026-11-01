@@ -1,0 +1,29 @@
+# GSHER Podcast Studio production blueprint
+# REVIEW COSTS before creating the paid service.
+services:
+  - type: web
+    name: gsher-podcast-studio
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: SESSION_SECURE
+        value: "1"
+      - key: PODCAST_DATA_DIR
+        value: /var/data
+      - key: MAX_UPLOAD_MB
+        value: "300"
+      - key: TRANSCRIBE_MODEL
+        value: gpt-transcribe
+      - key: BRIEF_MODEL
+        value: gpt-4o-mini
+    disk:
+      name: podcast-media
+      mountPath: /var/data
+      sizeGB: 10
