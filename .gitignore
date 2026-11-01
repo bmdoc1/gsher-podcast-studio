@@ -1,0 +1,9 @@
+# Never commit private episodes, credentials or test caches.
+.env
+.env.*
+!.env.example
+data/
+uploads/
+__pycache__/
+.pytest_cache/
+*.pyc
