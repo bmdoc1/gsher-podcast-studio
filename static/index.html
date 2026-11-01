@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#102d34">
+<title>GSHER Podcast Studio · Voices for Better Health</title>
+<meta name="description" content="Listen to conversations about self-healthcare, cellular wellbeing, recovery and medical education from GSHER.">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="site">
+<header class="topbar">
+ <div class="brand" role="banner"><div class="brand-icon"><span class="brand-wave">▥</span></div><div><strong>GSHER</strong><span>Podcast Studio</span></div></div>
+ <nav aria-label="Main menu"><button class="nav-link active" id="listenNav">Listen</button><button class="nav-link" id="studioNav">Studio admin <span aria-hidden="true">↗</span></button></nav>
+ <a class="external-link" href="https://www.globalselfhealthcare.org/" target="_blank" rel="noopener">Visit GSHER <span aria-hidden="true">↗</span></a>
+</header>
+<main>
+<section class="hero" aria-labelledby="hero-title">
+ <div class="hero-content"><div class="eyebrow"><span class="signal-dot"></span> GSHER AUDIO JOURNAL · ENGLISH / हिन्दी / ଓଡ଼ିଆ</div>
+  <h1 id="hero-title">Conversations that<br><em>make health understandable.</em></h1>
+  <p>Stories, science and practical self-care—in the voices of doctors, educators and people with lived experience.</p>
+  <div class="hero-actions"><button class="primary-btn" id="exploreBtn"><span aria-hidden="true">▶</span> Explore episodes</button><span class="hero-note">One Cell · One Earth · One Health</span></div>
+ </div>
+ <div class="hero-art" aria-hidden="true"><div class="orbit orbit1"></div><div class="orbit orbit2"></div><div class="orb-center"><span class="mic-icon">♩</span></div><div class="sound-waves"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="sound-label">VOICES OF SELF-HEALTHCARE</div></div>
+</section>
+<section class="library" id="library">
+ <div class="section-heading"><div><div class="eyebrow teal">THE LISTENING LIBRARY</div><h2>Explore the conversations</h2><p>Listen, meet the speakers and read along with the episode brief or transcript.</p></div><div class="count-chip" id="episodeCount">0 episodes</div></div>
+ <div class="content-grid">
+  <aside class="sidebar" aria-label="Episode directory"><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search topics or speakers" aria-label="Search episodes"></div><div class="filter-row" id="languageFilters"><button data-lang="all" class="filter active">All</button><button data-lang="en" class="filter">English</button><button data-lang="hi" class="filter">हिन्दी</button><button data-lang="or" class="filter">ଓଡ଼ିଆ</button></div><div class="episode-list" id="episodeList" aria-live="polite"></div></aside>
+  <article class="detail" id="detail" aria-live="polite"><div class="empty-detail"><div class="empty-art">◉</div><h3>Ready to listen?</h3><p>Select an episode to start. Every recording can include a speaker gallery, summary and transcript.</p></div></article>
+ </div>
+</section>
+<section class="values"><div><span class="value-icon">✳</span><h3>Understand</h3><p>Complex medical ideas, explained in everyday language.</p></div><div><span class="value-icon">◌</span><h3>Reflect</h3><p>Real voices, careful questions and lived experiences.</p></div><div><span class="value-icon">↗</span><h3>Act</h3><p>Small, practical self-care steps to discuss with your care team.</p></div></section>
+</main>
+<footer><strong>GSHER · Global Self-Healthcare Education & Research</strong><span>Educational information only. Not a substitute for individual medical advice or emergency care.</span><span>Self-healthcare is the best healthcare.</span></footer>
+</div>
+<div class="overlay hidden" id="loginOverlay" role="dialog" aria-modal="true" aria-labelledby="loginHeading"><div class="dialog narrow"><button class="close-x" data-close="loginOverlay" aria-label="Close">×</button><div class="eyebrow teal">PRIVATE PUBLISHING AREA</div><h2 id="loginHeading">Studio sign-in</h2><p>Manage episode recordings, speaker photographs, briefs and transcripts.</p><form id="loginForm"><label>Administrator password<input id="adminPassword" type="password" autocomplete="current-password" required></label><p class="form-alert" id="loginError"></p><button class="primary-btn wide" type="submit">Enter studio</button></form></div></div>
+<div class="overlay hidden" id="adminOverlay" role="dialog" aria-modal="true" aria-labelledby="adminHeading"><div class="dialog studio-dialog"><div class="dialog-head"><div><div class="eyebrow teal">GSHER · CONTENT MANAGEMENT</div><h2 id="adminHeading">Podcast Publishing Studio</h2></div><div class="dialog-actions"><button class="subtle-btn" id="newEpisode">+ New episode</button><button class="subtle-btn" id="logoutBtn">Sign out</button><button class="close-x static" data-close="adminOverlay" aria-label="Close">×</button></div></div><div class="studio-layout"><div class="admin-list" id="adminList"></div><div class="editor" id="editor"><div class="editor-empty">Create an episode or select an existing one to edit it.</div></div></div></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
