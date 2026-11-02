@@ -1,0 +1,45 @@
+name: GSHER Cloudflare Pages checks
+
+on:
+  push:
+    branches:
+      - cloudflare-migration
+    paths:
+      - 'cloudflare-pages/**'
+      - '.github/workflows/gsher-cloudflare-pages.yml'
+  pull_request:
+    paths:
+      - 'cloudflare-pages/**'
+      - '.github/workflows/gsher-cloudflare-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Check Pages worker, UI and privacy tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cloudflare-pages
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run API tests and JavaScript syntax checks
+        run: npm run check
+      - name: Validate Cloudflare package structure
+        run: |
+          test -f public/_worker.js
+          test -f public/index.html
+          test -f public/static/app.js
+          test -f schema.sql
+          test -f SETUP.md
+      - name: Refuse to package credential files
+        run: |
+          if find . -type f \( -name '.env' -o -name '.dev.vars' -o -name 'credentials.json' \) | grep . ; then
+            echo 'Secret-containing files cannot be committed to this repository'
+            exit 1
+          fi
