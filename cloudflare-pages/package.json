@@ -1,0 +1,9 @@
+{
+  "name": "gsher-podcast-cloudflare-pages",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node --check public/_worker.js && node --check public/static/app.js && node --test tests/*.test.js"
+  }
+}
