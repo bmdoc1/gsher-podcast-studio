@@ -1,0 +1,48 @@
+name: GSHER Cloudflare Pages live smoke test
+
+on:
+  push:
+    branches: [cloudflare-migration]
+    paths:
+      - '.github/workflows/gsher-live-smoke.yml'
+      - 'cloudflare-pages/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    name: Verify public Cloudflare staging endpoints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test HTTPS homepage, health, session and episodes
+        env:
+          SITE: https://gsher-podcast-studio.pages.dev
+        run: |
+          node --input-type=module <<'JS'
+          import assert from 'node:assert/strict';
+          const origin = process.env.SITE;
+          async function get(path) {
+            const resp = await fetch(origin + path, { signal: AbortSignal.timeout(20000), headers: { 'Accept': path === '/' ? 'text/html' : 'application/json' } });
+            const body = await resp.text();
+            assert.equal(resp.status, 200, path + ' returned HTTP ' + resp.status + ' (' + body.slice(0, 180) + ')');
+            return body;
+          }
+          const home = await get('/');
+          assert.match(home, /GSHER|Podcast Studio/i);
+          console.log('Homepage: 200, GSHER content present');
+          const health = JSON.parse(await get('/health'));
+          assert.equal(health.ok, true);
+          assert.equal(health.platform, 'cloudflare');
+          console.log('Health: 200, Cloudflare runtime ready');
+          const session = JSON.parse(await get('/api/session'));
+          assert.equal(session.admin, false);
+          assert.equal(session.password_configured, true, 'ADMIN_PASSWORD secret is not active on production');
+          console.log('Session: anonymous, administrator password configured');
+          const catalog = JSON.parse(await get('/api/episodes'));
+          assert.ok(Array.isArray(catalog.episodes));
+          assert.ok(catalog.episodes.every(x => x.status === 'published'), 'Private episodes exposed in public catalog');
+          console.log('Public episode API: '+catalog.episodes.length+' published episode(s); no drafts exposed');
+          console.log('Smoke tests PASS. Uploading and admin login require separate manual testing.');
+          JS
